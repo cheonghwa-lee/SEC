@@ -318,7 +318,8 @@ def tlqkf(rd, finish_c, features, conditions, conditions_rel):
     return conditions, conditions_rel
 
 def main():
-    raw_data = get_data("episode_data_11_08_24.csv")
+    # raw_data = get_data("episode_data_11_08_24.csv")
+    
     # figure_timeseries(1, raw_data, 1000)
     # starts = [10000]
     # ends = [11000]
