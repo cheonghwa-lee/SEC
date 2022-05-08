@@ -7,7 +7,6 @@ import math
 import random
 
 from Figure_SEC import *
-from Clustering_SEC import *
 
 from sklearn.cluster import KMeans
 from sklearn.cluster import AffinityPropagation
@@ -22,8 +21,22 @@ from sklearn.cluster import Birch
 import keras
 from keras import layers
 
-def get_data(file):
-    raw_data = pd.read_csv(file)
+import os
+
+def get_data(files):
+    raw_data = pd.DataFrame()
+    if os.path.isfile("raw_data.csv"):
+        raw_data = pd.read_csv("raw_data.csv")
+    else:
+        indexes = [random.randint(len(files)) for _ in range(10)]
+        files_ = []
+        for idx in indexes:
+            files_.append(files[idx])
+        for file in files_:
+            raw_data_ = pd.read_csv("raw_data/"+file)
+            if raw_data_.shape[1] == 29:
+                raw_data = pd.concat([raw_data, raw_data_], ignore_index=True)
+        raw_data.to_csv("raw_data.csv")
     return raw_data
 
 def EDA(raw_data):
@@ -39,10 +52,13 @@ def level_1_clustering(raw_data):
     raw_data["step"] = 0
 
     raw_data["level_1_cluster"] = -1
-
+    print(raw_data.shape)
     for i in range(raw_data.shape[0]):
         # print("episode: ", episode_num)
-        
+
+        if i + 1 == raw_data.shape[0]:
+            break
+
         if (raw_data["READ"][i] <= 0.75) or (raw_data["REBD"][i] <= 0.75):
             raw_data.at[i, "episode"] = episode_num
             raw_data.at[i, "step"] = step_num
@@ -50,6 +66,7 @@ def level_1_clustering(raw_data):
             step_num += 1
 
             # if (raw_data["AEX"][i] > raw_data["AEX"][i + 1]) and (0.8 < raw_data["AEX"][i + 1] < 1.2):
+            # print(i)
             if (raw_data["READ"][i+1] > 0.75) and (raw_data["REBD"][i+1] > 0.75):
                 # if raw_data["AEX"][i] > 5.0:
                 #     raw_data.at[i, "P/F"] = "P"
@@ -64,22 +81,12 @@ def level_1_clustering(raw_data):
             raw_data.at[i, "episode"] = None
             raw_data.at[i, "step"] = None
 
-        if i + 1 == raw_data.shape[0]:
-            break
-
-        
-
-    # datadata = []
-    # for episode in range(1, np.max(raw_data["episode"])):
-    #     globals()['raw_data_{}'.format(episode)] = raw_data.loc[raw_data.episode == episode]
-    #     datadata.append(globals()['raw_data_{}'.format(episode)])
-
     return raw_data
 
 def level_2_clustering(raw_data):
     raw_data["level_2_cluster"] = -1
 
-    print("1111", np.max(raw_data["episode"]), raw_data["episode"].unique())
+    # print("1111", np.max(raw_data["episode"]), raw_data["episode"].unique())
     # print(raw_data.loc[raw_data["episode"] == 1])
     # 
     # print(np.max(tlqkf["AEX"]))
@@ -97,30 +104,13 @@ def level_2_clustering(raw_data):
 
     return raw_data
 
-    # for i in range(np.max(raw_data["episode"])):
-    #     raw_data.loc[raw_data["episode"] == i]
-
-
-    # pass_index = raw_data.index[raw_data["P/F"] == "P"]
-    # pass_episodes = []
-    # # print(pass_index)
-    # for idx in pass_index:
-    #     # print(idx)
-    #     pass_episodes.append(raw_data["episode"][idx])
-    # fail_index = raw_data.index[raw_data["P/F"] == "F"]
-    # fail_episodes = []
-    # for idx in fail_index:
-    #     fail_episodes.append(raw_data["episode"][idx])
-    # # print("P/F", pass_episodes, fail_episodes)
-    # return pass_episodes, fail_episodes
-
-def level_3_clustering(raw_data, features):
+def level_3_clustering(raw_data, features, cluster):
     # raw_data.loc[raw_data["level_1_cluster"] == 0]
     # raw_data.loc[raw_data["level_1_cluster"] == 1]
     # raw_data.loc[raw_data["level_2_cluster"] == 0]
     # raw_data.loc[raw_data["level_2_cluster"] == -1]
 
-    print("2222", np.max(raw_data.loc[raw_data["level_2_cluster"] == 1]["episode"]), raw_data.loc[raw_data["level_2_cluster"] == 1]["episode"].unique())
+    # print("2222", np.max(raw_data.loc[raw_data["level_2_cluster"] == 1]["episode"]), raw_data.loc[raw_data["level_2_cluster"] == 1]["episode"].unique())
     episode_indexes = []
     for episode in raw_data.loc[raw_data["level_2_cluster"] == 1]["episode"].unique():
         # print(raw_data.loc[raw_data["episode"] == episode].shape)
@@ -167,11 +157,14 @@ def level_3_clustering(raw_data, features):
                 indexes = indexes_3
                 indexes.append(episode_last_step)
                 indexes.append(episode_last_step)
-            elif np.array(indexes_3).shape[0] > 10:
+            
+            elif np.array(indexes_3).shape[0] == 11:
                 indexes = indexes_3[1:]
+            elif np.array(indexes_3).shape[0] == 12:
+                indexes = indexes_3[2:]
             else:
                 print("error")
-            # print(np.array(indexes).shape)
+            # print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@", np.array(indexes).shape)
             # print(indexes)
             episode_indexes.append(indexes)
     print("tlqkf", np.array(episode_indexes).shape)
@@ -196,12 +189,15 @@ def level_3_clustering(raw_data, features):
         # clustering_data.append(episode_data)
         clustering_data.append(cdata)
         visualization_data.append(vdata)
-    # for idx in range(304):
-        # print("!@#$", np.array(clustering_data[idx]).shape)
+    print(np.array(clustering_data).shape)
+    # for idx in range(clustering_data.shape[0]):
+    #     print("!@#$", np.array(clustering_data[idx]).shape)
     
     print("!@#$", np.array(clustering_data).shape)
 
-    CLUSTER = 5
+    CLUSTER = cluster
+
+    print(np.array(clustering_data).shape)
 
     model = KMeans(n_clusters=CLUSTER, random_state=10).fit(clustering_data)
     dic1 = {name:value for name, value in zip(model.labels_, visualization_data)}
@@ -219,9 +215,9 @@ def level_3_clustering(raw_data, features):
     dic2 = {name:value for name, value in zip(clustering_relative.labels_, visualization_data)} # do not touch!
     # figure_clustering_algorithm(7, dic2)
 
-    MS_clustering_relative = MeanShift(bandwidth=0.2).fit(clustering_data)
-    dic3 = {name:value for name, value in zip(MS_clustering_relative.labels_, visualization_data)} # do not touch!
-    figure_clustering_algorithm(8, dic3)
+    # MS_clustering_relative = MeanShift(bandwidth=0.2).fit(clustering_data)
+    # dic3 = {name:value for name, value in zip(MS_clustering_relative.labels_, visualization_data)} # do not touch!
+    # figure_clustering_algorithm(8, dic3)
 
     clustering_relative = SpectralClustering(n_clusters=CLUSTER, assign_labels='discretize', random_state=10).fit(clustering_data)
     dic4 = {name:value for name, value in zip(clustering_relative.labels_, visualization_data)} # do not touch!
@@ -248,40 +244,15 @@ def level_3_clustering(raw_data, features):
     dic9 = {name:value for name, value in zip(clustering_relative.labels_, visualization_data)} # do not touch!
     figure_clustering_algorithm(14, dic9)
     
-    # # random plot
-    # for j in range(10):
-    #     figure_cartesian_random(1000+j, visualization_data)
-    # # for j in range(10):
-    # #     figure_cartesian_random(2000+j, fail_visualization_data)
-    
-    # figure_cartesian_3d(100, visualization_data)
-    # # figure_cartesian_2d(101, clustering_data)
-
-    # # figure_cartesian_3d(102, fail_visualization_data)
-    # # figure_cartesian_2d(103, fail_clustering_data)
-
-    # # level_2_clustering(raw_data, episodic_data)
-
-def tlqkf(rd, finish_c, features, conditions, conditions_rel):
-    # conditions = []
-    # conditions_rel = []
-    # condition_raw = []
-    
-    condition = [rd["AEX"][finish_c].tolist() + rd["AEY"][finish_c].tolist() + rd["AEZ"][finish_c].tolist() + rd["AAX"][finish_c].tolist() + rd["AAY"][finish_c].tolist() + rd["AAZ"][finish_c].tolist() + rd["ABX"][finish_c].tolist() + rd["ABY"][finish_c].tolist() + rd["ABZ"][finish_c].tolist()]
-    condition_raw = []
-    # condition = []
-    for idx in features:
-        condition_raw.append(np.array(rd[idx][finish_c].tolist()).squeeze())
-    conditions_rel.append(condition_raw)
-    conditions.append(condition)
-
-    
-    return conditions, conditions_rel
-
 def main():
-    raw_data = get_data("episode_data_01_53_02.csv")
+    # files = ["episode_data_01_53_02.csv", "episode_data_23_47_42.csv"]
+    # files = ["episode_data_01_53_02.csv"]
+    files = os.listdir("raw_data")
+    raw_data = get_data(files)
     # EDA(raw_data)
     # figure_timeseries(1, raw_data, raw_data.shape[0])
+    print(raw_data.shape)
+    print(raw_data)
 
     raw_data = level_1_clustering(raw_data)
     print(raw_data.loc[raw_data["level_1_cluster"] == 1].shape)
@@ -289,16 +260,14 @@ def main():
     print(raw_data.loc[raw_data["level_1_cluster"] == -1].shape)
     # EDA(raw_data)
     # figure_timeseries(2, raw_data, raw_data.shape[0])
+    print("######################################", raw_data.shape)
 
     raw_data = level_2_clustering(raw_data)
     # EDA(raw_data)
     print(raw_data.loc[raw_data["level_2_cluster"] == 1].shape)
     print(raw_data.loc[raw_data["level_2_cluster"] == 0].shape)
     print(raw_data.loc[raw_data["level_2_cluster"] == -1].shape)
-
-    # figure_timeseries_episodic_start_end(2, episodic_data, 250, 255)
-    # figure_cartesian(3, episodic_data)
-    # figure_cartesian_start_end(4, episodic_data, 250, 255)
+    print("######################################", raw_data.shape)
 
     features = ["REAX", "REAY", "REAZ", "REBX", "REBY", "REBZ", "READ", "REBD"]
     # features = ["REAX", "REAY", "REAZ", "REBX", "REBY", "REBZ"]
@@ -307,63 +276,8 @@ def main():
     # features = ["AEX", "AEY", "AEZ", "AAX", "AAY", "AAZ", "ABX", "ABY", "ABZ"]
     # features = ["AEX", "AEY", "AAX", "AAY", "ABX", "ABY", "REAX", "REAY", "REBX", "REBY"]
     # features = ["REAX", "REAY", "REBX", "REBY", "READ", "REBD"]
-    level_3_clustering(raw_data, features)
 
-    
-
-    CLUSTER = 3
-
-    # condition1 = create_data_()
-    # # print(condition1)
-    # figure_cartesian_single(888, condition1)
-
-    # model = KMeans(n_clusters=CLUSTER, random_state=20).fit(condition1)
-    # dic111 = {name:value for name, value in zip([i for i in range(CLUSTER)], model.cluster_centers_.tolist())}
-    # # dic112 = {name:value for name, value in zip([i for i in range(CLUSTER)], condition1)}
-    # figure_clustering_algorithm(665, dic111)
-    # # figure_clustering_algorithm(666, dic112)
-    # elbow(667, condition1)
-
-    # # clustering_relative = AffinityPropagation(random_state=5).fit(condition1)
-    # # # dic2 = {name:value for name, value in zip(clustering_relative.labels_, condition1)} # do not touch!
-    # # dic2 = {name:value for name, value in zip([i for i in range(CLUSTER)], clustering_relative.cluster_centers_.tolist())}
-    # # figure_clustering_algorithm(7, dic2)
-
-    # MS_clustering_relative = MeanShift(bandwidth=0.2).fit(condition1)
-    # # dic3 = {name:value for name, value in zip(MS_clustering_relative.labels_, condition1)} # do not touch!
-    # dic3 = {name:value for name, value in zip([i for i in range(CLUSTER)], MS_clustering_relative.cluster_centers_.tolist())}
-    # figure_clustering_algorithm(8, dic3)
-
-    # # clustering_relative = SpectralClustering(n_clusters=CLUSTER, assign_labels='discretize', random_state=10).fit(condition1)
-    # # # dic4 = {name:value for name, value in zip(clustering_relative.labels_, condition1)} # do not touch!
-    # # dic4 = {name:value for name, value in zip([i for i in range(CLUSTER)], clustering_relative.affinity_matrix_.tolist())}
-    # # figure_clustering_algorithm(9, dic4)
-
-    # clustering_relative = AgglomerativeClustering(n_clusters=CLUSTER).fit(condition1)
-    # dic5 = {name:value for name, value in zip(clustering_relative.labels_, condition1)} # do not touch!
-    # # dic5 = {name:value for name, value in zip([i for i in range(CLUSTER)], clustering_relative.distances_.tolist())}
-    # figure_clustering_algorithm(10, dic5)
-
-    # # DBSCAN_clustering_relative = DBSCAN(eps=0.5, min_samples=CLUSTER).fit(condition1)
-    # # # dic6 = {name:value for name, value in zip(DBSCAN_clustering_relative.labels_, condition1)} # do not touch!
-    # # dic6 = {name:value for name, value in zip([i for i in range(CLUSTER)], DBSCAN_clustering_relative.components_.tolist())}
-    # # figure_clustering_algorithm(11, dic6)
-
-    # # clustering_relative = OPTICS(min_samples=CLUSTER).fit(condition1)
-    # # # dic7 = {name:value for name, value in zip(clustering_relative.labels_, condition1)} # do not touch!
-    # # dic7 = {name:value for name, value in zip([i for i in range(CLUSTER)], clustering_relative.core_distances_.tolist())}
-    # # # figure_clustering_algorithm(12, dic7)
-
-    # GMM_clustering_relative = GaussianMixture(n_components=CLUSTER, random_state=10).fit(condition1)
-    # labels = GMM_clustering_relative.fit_predict(condition1)
-    # dic8 = {name:value for name, value in zip(labels, condition1)} # do not touch!
-    # # dic8 = {name:value for name, value in zip([i for i in range(CLUSTER)], GMM_clustering_relative.means_.tolist())}
-    # figure_clustering_algorithm(13, dic8)
-
-    # clustering_relative = Birch(n_clusters=CLUSTER).fit(condition1)
-    # # dic9 = {name:value for name, value in zip(clustering_relative.labels_, condition1)} # do not touch!
-    # dic9 = {name:value for name, value in zip([i for i in range(CLUSTER)], clustering_relative.subcluster_centers_.tolist())}
-    # figure_clustering_algorithm(14, dic9)
+    level_3_clustering(raw_data, features, 10)
 
     plt.show()
 
