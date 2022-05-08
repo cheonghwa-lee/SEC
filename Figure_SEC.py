@@ -153,6 +153,8 @@ def figure_cartesian(i, datadata):
     plt.figure(i)
     plt.xlim([0, 5])
     plt.ylim([-0.3, 0.3])
+    # plt.xlim([-0.5, 5.5])
+    # plt.ylim([-0.5, 0.5])
     plt.axis('scaled')
     ii = 1
     maxfigure = 10
@@ -184,7 +186,7 @@ def figure_cartesian_single(i, conditions):
     ii = 1
     for condition in conditions:
         feature = 9
-        range_ = len(condition)/feature
+        range_ = int(len(condition)/feature)
         # print("range: ", range_)
         for scene in range(range_):
             plt.subplot(len(conditions), 1, ii)
@@ -283,6 +285,48 @@ def figure_cartesian_start_end(i, datadata, start_f, end_f):
 
         # conditions = [rd["AEX"][finish_c], rd["AEY"][finish_c], rd["AEZ"][finish_c], rd["AAX"][finish_c], rd["AAY"][finish_c], rd["AAZ"][finish_c], rd["ABX"][finish_c], rd["ABY"][finish_c], rd["ABZ"][finish_c]]
 
+def figure_cartesian_episode(i, raw_data, episode_indexes):
+    plt.figure(i)
+    # plt.figure(figsize=(12, 3))
+    # plt.xlim([-0.5, 5.5])
+    # plt.ylim([-0.5, 0.5])
+    # plt.axis('scaled')
+    ii = 1
+    maxfigure = np.array(episode_indexes).shape[0]
+    print("maxfigure: ", maxfigure)
+    # conditions = []
+    for episode_index in episode_indexes:
+        # index = rd.index[rd["step"] == 1]
+        # finish_c = rd.index[rd["step"] == len(rd)-1] # 
+        magnitude = 0.21
+        plt.subplot(maxfigure, 1, ii)
+        plt.axis('scaled')
+        plt.xlim([-0.5, 5.5])
+        plt.ylim([-0.5, 0.5])
+        for index in episode_index:
+            plt.plot(raw_data["AEX"][index], raw_data["AEY"][index], "g.")
+            circle1 = plt.Circle((raw_data["AEX"][index], raw_data["AEY"][index]), 0.105, fill=False)
+            plt.gca().add_patch(circle1)
+            x1=magnitude*np.cos(raw_data["AEZ"][index])
+            y1=magnitude*np.sin(raw_data["AEZ"][index])
+            plt.annotate("", xy=(x1+raw_data["AEX"][index], y1+raw_data["AEY"][index]), xytext=(raw_data["AEX"][index], raw_data["AEY"][index]), arrowprops={"facecolor": "green", 'edgecolor':'k', 'shrink' : 0.2, 'alpha':0.5})
+
+            plt.plot(raw_data["AAX"][index], raw_data["AAY"][index], "b.")
+            circle2 = plt.Circle((raw_data["AAX"][index], raw_data["AAY"][index]), 0.105, fill=False)
+            plt.gca().add_patch(circle2)
+            x2=magnitude*np.cos(raw_data["AAZ"][index])
+            y2=magnitude*np.sin(raw_data["AAZ"][index])
+            plt.annotate("", xy=(x2+raw_data["AAX"][index], y2+raw_data["AAY"][index]), xytext=(raw_data["AAX"][index], raw_data["AAY"][index]), arrowprops={"facecolor": "blue", 'edgecolor':'k', 'shrink' : 0.2, 'alpha':0.5})
+
+            plt.plot(raw_data["ABX"][index], raw_data["ABY"][index], "r.")
+            circle3 = plt.Circle((raw_data["ABX"][index], raw_data["ABY"][index]), 0.105, fill=False)
+            plt.gca().add_patch(circle3)
+            x3=magnitude*np.cos(raw_data["ABZ"][index])
+            y3=magnitude*np.sin(raw_data["ABZ"][index])
+            plt.annotate("", xy=(x3+raw_data["ABX"][index], y3+raw_data["ABY"][index]), xytext=(raw_data["ABX"][index], raw_data["ABY"][index]), arrowprops={"facecolor": "red", 'edgecolor':'k', 'shrink' : 0.2, 'alpha':0.5})
+        ii += 1
+        # conditions = [rd["AEX"][finish_c], rd["AEY"][finish_c], rd["AEZ"][finish_c], rd["AAX"][finish_c], rd["AAY"][finish_c], rd["AAZ"][finish_c], rd["ABX"][finish_c], rd["ABY"][finish_c], rd["ABZ"][finish_c]]
+
 def figure_clustering_algorithm(i, dic):
     plt.figure(i)
     # plt.xlim([-1, 6])
@@ -294,7 +338,7 @@ def figure_clustering_algorithm(i, dic):
         # finish_c = rd.index[rd["step"] == len(rd)-1] # 
         magnitude = 0.21
         feature = 9
-        range_ = len(value) / feature
+        range_ = int(len(value) / feature)
         for scene in range(range_):
             plt.subplot(len(dic), 1, key +1)
             plt.axis('scaled')

@@ -15,7 +15,7 @@ from sklearn.cluster import MeanShift
 from sklearn.cluster import SpectralClustering
 from sklearn.cluster import AgglomerativeClustering
 from sklearn.cluster import DBSCAN
-# from sklearn.cluster import OPTICS
+from sklearn.cluster import OPTICS
 from sklearn.mixture import GaussianMixture
 from sklearn.cluster import Birch
 
@@ -26,280 +26,241 @@ def get_data(file):
     raw_data = pd.read_csv(file)
     return raw_data
 
-# def EDA(raw_data):
-#     print(raw_data.shape)
-#     print(raw_data.info())
-#     print(raw_data.head())
-#     print(raw_data.describe())
+def EDA(raw_data):
+    print(raw_data.shape)
+    print(raw_data.info())
+    print(raw_data.head())
+    print(raw_data.describe())
 
-# def create_data():
-#     conditions = []
-#     for _ in range(5):
-#         xerror = 0.4
-#         yerror = 0.1
-#         zerror = -3.14 / 20
-#         AEX = 1.0 + random.uniform(-xerror, xerror)
-#         AEY = 0.15 + random.uniform(-yerror, yerror)
-#         AEZ = 0.0 + random.uniform(-zerror, zerror)
-#         AAX = 0.0 + random.uniform(-xerror, xerror)
-#         AAY = -0.15 + random.uniform(-yerror, yerror)
-#         AAZ = 0.0 + random.uniform(-zerror, zerror)
-#         ABX = 2.0 + random.uniform(-xerror, xerror)
-#         ABY = 0.15 + random.uniform(-yerror, yerror)
-#         ABZ = 0.0 + random.uniform(-zerror, zerror)
-#         # AEX = 1.0 
-#         # AEY = 0.15 
-#         # AEZ = 0.0
-#         # AAX = 0.0 
-#         # AAY = -0.15 
-#         # AAZ = 0.0 
-#         # ABX = 2.0 
-#         # ABY = 0.15 
-#         # ABZ = 0.0
-#         conditions.append([AEX, AEY, AEZ, AAX, AAY, AAZ, ABX, ABY, ABZ])
-        
-#         AEX = 0.0 + random.uniform(-xerror, xerror)
-#         AEY = -0.15 + random.uniform(-yerror, yerror)
-#         AEZ = 0.0 + random.uniform(-zerror, zerror)
-#         AAX = 2.0 + random.uniform(-xerror, xerror)
-#         AAY = -0.15 + random.uniform(-yerror, yerror)
-#         AAZ = 0.0 + random.uniform(-zerror, zerror)
-#         ABX = 5.0 + random.uniform(-xerror, xerror)
-#         ABY = 0.15 + random.uniform(-yerror, yerror)
-#         ABZ = -3.14 + random.uniform(-zerror, zerror)
-#         conditions.append([AEX, AEY, AEZ, AAX, AAY, AAZ, ABX, ABY, ABZ])
-        
-#         AEX = 1.0 + random.uniform(-xerror, xerror)
-#         AEY = 0.15 + random.uniform(-yerror, yerror)
-#         AEZ = 0.0 + random.uniform(-zerror, zerror)
-#         AAX = 3.0 + random.uniform(-xerror, xerror)
-#         AAY = 0.5 + random.uniform(-yerror, yerror)
-#         AAZ = -3.14 / 2 + random.uniform(-zerror, zerror)
-#         ABX = 5.0 + random.uniform(-xerror, xerror)
-#         ABY = -0.5 + random.uniform(-yerror, yerror)
-#         ABZ = 3.14 / 2 + random.uniform(-zerror, zerror)
-#         conditions.append([AEX, AEY, AEZ, AAX, AAY, AAZ, ABX, ABY, ABZ])
-
-#     return conditions
-
-def create_data_():
-    conditions = []
-    range_ = 15
-    for _ in range(5):
-        xerror = 0.4
-        yerror = 0.1
-        zerror = -3.14 / 20
-        tlqkf1 = []
-        AEX = 1.0 
-        AEY = 0.15 
-        AEZ = 0.0 
-        AAX = 0.0 
-        AAY = -0.15 
-        AAZ = 0.0 
-        ABX = 2.0 
-        ABY = 0.15 
-        ABZ = 0.0 
-        for _ in range(range_):
-            AEX += 0.2
-            AEY += 0
-            AEZ += 0 + random.uniform(-zerror, zerror)
-            AAX += 0.3
-            AAY += 0
-            AAZ += 0 + random.uniform(-zerror, zerror)
-            ABX += 0.1
-            ABY += 0
-            ABZ += 0 + random.uniform(-zerror, zerror)
-            # AEX = 1.0 
-            # AEY = 0.15 
-            # AEZ = 0.0
-            # AAX = 0.0 
-            # AAY = -0.15 
-            # AAZ = 0.0 
-            # ABX = 2.0 
-            # ABY = 0.15 
-            # ABZ = 0.0
-            tlqkf1 += [AEX, AEY, AEZ, AAX, AAY, AAZ, ABX, ABY, ABZ]
-        conditions.append(tlqkf1)
-        
-        tlqkf2 = []
-        AEX = 1.0 
-        AEY = 0.15 
-        AEZ = 0.0 
-        AAX = 0.0 
-        AAY = -0.15 
-        AAZ = 0.0 
-        ABX = 2.0 
-        ABY = 0.15 
-        ABZ = 0.0 
-        for _ in range(range_):
-            AEX += 0.3
-            AEY += 0
-            AEZ += 0 + random.uniform(-zerror, zerror)
-            AAX += 0.1
-            AAY += 0
-            AAZ += 0 + random.uniform(-zerror, zerror)
-            ABX += 0.4
-            ABY += 0
-            ABZ += 0 + random.uniform(-zerror, zerror)
-            # AEX = 1.0 
-            # AEY = 0.15 
-            # AEZ = 0.0
-            # AAX = 0.0 
-            # AAY = -0.15 
-            # AAZ = 0.0 
-            # ABX = 2.0 
-            # ABY = 0.15 
-            # ABZ = 0.0
-            tlqkf2 += [AEX, AEY, AEZ, AAX, AAY, AAZ, ABX, ABY, ABZ]
-        conditions.append(tlqkf2)
-
-        tlqkf3 = []
-        AEX = 1.0 
-        AEY = 0.15 
-        AEZ = 0.0 
-        AAX = 0.0 
-        AAY = -0.15 
-        AAZ = 0.0 
-        ABX = 2.0 
-        ABY = 0.15 
-        ABZ = 0.0 
-        for _ in range(range_):
-            AEX += 0.0
-            AEY += 0
-            AEZ += 0 + random.uniform(-zerror, zerror)
-            AAX += 0.1
-            AAY += 0
-            AAZ += 0 + random.uniform(-zerror, zerror)
-            ABX += 0.2
-            ABY += 0
-            ABZ += 0 + 0.1
-            # AEX = 1.0 
-            # AEY = 0.15 
-            # AEZ = 0.0
-            # AAX = 0.0 
-            # AAY = -0.15 
-            # AAZ = 0.0 
-            # ABX = 2.0 
-            # ABY = 0.15 
-            # ABZ = 0.0
-            tlqkf3 += [AEX, AEY, AEZ, AAX, AAY, AAZ, ABX, ABY, ABZ]
-        conditions.append(tlqkf3)
-
-        # tlqkf2 = []
-        # AEX = 0.0 
-        # AEY = -0.15 
-        # AEZ = 0.0 
-        # AAX = 2.0 
-        # AAY = -0.15 
-        # AAZ = 0.0 
-        # ABX = 5.0 
-        # ABY = 0.15 
-        # ABZ = -3.14 
-        # for _ in range(range_):
-        #     AEX += 0.1
-        #     AEY += 0
-        #     AEZ += 0 + random.uniform(-zerror, zerror)
-        #     AAX += 0.3
-        #     AAY += 0
-        #     AAZ += 0 + random.uniform(-zerror, zerror)
-        #     ABX += -0.3
-        #     ABY += 0
-        #     ABZ += 0 + random.uniform(-zerror, zerror)
-        #     tlqkf2 += [AEX, AEY, AEZ, AAX, AAY, AAZ, ABX, ABY, ABZ]
-        # conditions.append(tlqkf2)
-        
-        # tlqkf3 = []
-        # AEX = 1.0 
-        # AEY = 0.15 
-        # AEZ = 0.0 
-        # AAX = 3.0 
-        # AAY = 0.5 
-        # AAZ = -3.14 / 2 
-        # ABX = 5.0 
-        # ABY = -0.5 
-        # ABZ = 3.14 / 2 
-        # for _ in range(range_):
-        #     AEX += 0.2
-        #     AEY += 0
-        #     AEZ += 0 + random.uniform(-zerror, zerror)
-        #     AAX += 0
-        #     AAY += -0.2
-        #     AAZ += 0 + random.uniform(-zerror, zerror)
-        #     ABX += 0
-        #     ABY += 0.2
-        #     ABZ += 0 + random.uniform(-zerror, zerror)
-        #     tlqkf3 += [AEX, AEY, AEZ, AAX, AAY, AAZ, ABX, ABY, ABZ]
-        # print("==================================================", np.array(tlqkf3).shape)
-        conditions.append(tlqkf3)
-
-    print("22-05-06", np.array(conditions).shape)
-
-    return np.array(conditions)
-
-def detect_rc(raw_data):
+def level_1_clustering(raw_data):
     episode_num = 1
     step_num = 1
     raw_data["episode"] = 0
     raw_data["step"] = 0
+
+    raw_data["level_1_cluster"] = -1
+
     for i in range(raw_data.shape[0]):
-        raw_data.at[i, "episode"] = episode_num
-        raw_data.at[i, "step"] = step_num
-        step_num += 1
+        # print("episode: ", episode_num)
+        
+        if (raw_data["READ"][i] <= 0.75) or (raw_data["REBD"][i] <= 0.75):
+            raw_data.at[i, "episode"] = episode_num
+            raw_data.at[i, "step"] = step_num
+            raw_data.at[i, "level_1_cluster"] = 1 # "unsafe"
+            step_num += 1
+
+            # if (raw_data["AEX"][i] > raw_data["AEX"][i + 1]) and (0.8 < raw_data["AEX"][i + 1] < 1.2):
+            if (raw_data["READ"][i+1] > 0.75) and (raw_data["REBD"][i+1] > 0.75):
+                # if raw_data["AEX"][i] > 5.0:
+                #     raw_data.at[i, "P/F"] = "P"
+                # else:
+                #     raw_data.at[i, "P/F"] = "F"
+                episode_num += 1
+                step_num = 1
+        else:
+            raw_data.at[i, "level_1_cluster"] = 0 # "safe"
+            # raw_data["READ"][i] = 0
+            # raw_data["REBD"][i] = 0
+            raw_data.at[i, "episode"] = None
+            raw_data.at[i, "step"] = None
+
         if i + 1 == raw_data.shape[0]:
             break
-        if (raw_data["AEX"][i] > raw_data["AEX"][i + 1]) and (0.9 < raw_data["AEX"][i + 1] < 1.1):
-            if raw_data["AEX"][i] > 5.0:
-                raw_data.at[i, "P/F"] = "P"
-            else:
-                raw_data.at[i, "P/F"] = "F"
-            episode_num += 1
-            step_num = 1
 
-    datadata = []
-    for episode in range(1, np.max(raw_data["episode"])):
-        globals()['raw_data_{}'.format(episode)] = raw_data.loc[raw_data.episode == episode]
-        datadata.append(globals()['raw_data_{}'.format(episode)])
+        
 
-    return datadata
+    # datadata = []
+    # for episode in range(1, np.max(raw_data["episode"])):
+    #     globals()['raw_data_{}'.format(episode)] = raw_data.loc[raw_data.episode == episode]
+    #     datadata.append(globals()['raw_data_{}'.format(episode)])
 
-def pass_fail_data(raw_data):
-    pass_index = raw_data.index[raw_data["P/F"] == "P"]
-    pass_episodes = []
-    # print(pass_index)
-    for idx in pass_index:
-        # print(idx)
-        pass_episodes.append(raw_data["episode"][idx])
-    fail_index = raw_data.index[raw_data["P/F"] == "F"]
-    fail_episodes = []
-    for idx in fail_index:
-        fail_episodes.append(raw_data["episode"][idx])
-    # print("P/F", pass_episodes, fail_episodes)
-    return pass_episodes, fail_episodes
+    return raw_data
 
-def clustering_data(datadata, features, pass_episodes, fail_episodes):
-    start_f = 0
-    end_f = 300
-    pass_conditions = []
-    pass_conditions_rel = []
-    fail_conditions = []
-    fail_conditions_rel = []
-    for rd in datadata[start_f: end_f]:
-        init_c = rd.index[rd["step"] == 1]
-        finish_c = rd.index[rd["step"] == len(rd)-1] 
-        # print(rd["episode"].tolist()[0], pass_episodes)
-        if rd["episode"].tolist()[0] in pass_episodes:
-            # pass_conditions, pass_conditions_rel = tlqkf(rd, init_c, features, pass_conditions, pass_conditions_rel)
-            pass_conditions, pass_conditions_rel = tlqkf(rd, finish_c, features, pass_conditions, pass_conditions_rel)
-        elif rd["episode"].tolist()[0] in fail_episodes:
-            # fail_conditions, fail_conditions_rel = tlqkf(rd, init_c, features, fail_conditions, fail_conditions_rel)
-            fail_conditions, fail_conditions_rel = tlqkf(rd, finish_c, features, fail_conditions, fail_conditions_rel)
+def level_2_clustering(raw_data):
+    raw_data["level_2_cluster"] = -1
+
+    print("1111", np.max(raw_data["episode"]), raw_data["episode"].unique())
+    # print(raw_data.loc[raw_data["episode"] == 1])
+    # 
+    # print(np.max(tlqkf["AEX"]))
+    # print("!!!!!!!!", np.max(raw_data.loc[raw_data["episode"] == 1]["AEX"]))
+    for num_episode in range(1, int(np.max(raw_data["episode"]))):
+        episodic_data = raw_data.loc[raw_data["episode"] == num_episode]
+        if np.min(episodic_data["READ"]) < 0.21 or np.min(episodic_data["REBD"]) < 0.21:
+            for i in episodic_data.index:
+                # print(i)
+                raw_data.at[i, "level_2_cluster"] = 1 # fail
         else:
-            print("ERROR!!!!!!!!")
-    pass_conditions = np.array(pass_conditions)
-    pass_conditions = pass_conditions.squeeze()
-    fail_conditions = np.array(fail_conditions)
-    fail_conditions = fail_conditions.squeeze()
-    return pass_conditions, pass_conditions_rel, fail_conditions, fail_conditions_rel
+            for i in episodic_data.index:
+                # print(i)
+                raw_data.at[i, "level_2_cluster"] = 0 # success
+
+    return raw_data
+
+    # for i in range(np.max(raw_data["episode"])):
+    #     raw_data.loc[raw_data["episode"] == i]
+
+
+    # pass_index = raw_data.index[raw_data["P/F"] == "P"]
+    # pass_episodes = []
+    # # print(pass_index)
+    # for idx in pass_index:
+    #     # print(idx)
+    #     pass_episodes.append(raw_data["episode"][idx])
+    # fail_index = raw_data.index[raw_data["P/F"] == "F"]
+    # fail_episodes = []
+    # for idx in fail_index:
+    #     fail_episodes.append(raw_data["episode"][idx])
+    # # print("P/F", pass_episodes, fail_episodes)
+    # return pass_episodes, fail_episodes
+
+def level_3_clustering(raw_data, features):
+    # raw_data.loc[raw_data["level_1_cluster"] == 0]
+    # raw_data.loc[raw_data["level_1_cluster"] == 1]
+    # raw_data.loc[raw_data["level_2_cluster"] == 0]
+    # raw_data.loc[raw_data["level_2_cluster"] == -1]
+
+    print("2222", np.max(raw_data.loc[raw_data["level_2_cluster"] == 1]["episode"]), raw_data.loc[raw_data["level_2_cluster"] == 1]["episode"].unique())
+    episode_indexes = []
+    for episode in raw_data.loc[raw_data["level_2_cluster"] == 1]["episode"].unique():
+        # print(raw_data.loc[raw_data["episode"] == episode].shape)
+        # print(raw_data.loc[raw_data["episode"] == episode].head(raw_data.loc[raw_data["episode"] == episode].shape[0]))
+        episode_first_step = raw_data.loc[raw_data["episode"] == episode][raw_data["step"] == 1].index.tolist()[0]
+        # print(episode_first_step)
+        episode_last_step = raw_data.loc[raw_data["episode"] == episode][raw_data["step"] == raw_data.loc[raw_data["episode"] == episode].shape[0]].index.tolist()[0]
+        # print(episode_last_step)
+        # print(episode_last_step - episode_first_step)
+        indexes = []
+        indexes_1 = []
+        indexes_2 = []
+        indexes_3 = []
+        num = 10
+        if raw_data.loc[raw_data["episode"] == episode].shape[0] >= num:
+            indexes_1.append(episode_first_step)
+            for index in range(episode_first_step, episode_last_step, int(round((episode_last_step-episode_first_step)/(num-1)))):
+                indexes_1.append(index)
+                # print(int((episode_last_step-episode_first_step)/(num-1)))
+            indexes_1.append(episode_last_step)
+            # print(np.array(indexes_1).shape)
+            indexes_2.append(episode_first_step)
+            for index in range(episode_first_step, episode_last_step, int(round((episode_last_step-episode_first_step)/(num-2)))):
+                indexes_2.append(index)
+                # print(int((episode_last_step-episode_first_step)/(num-1)))
+            indexes_2.append(episode_last_step)
+            # print(np.array(indexes_2).shape)
+            indexes_3.append(episode_first_step)
+            for index in range(episode_first_step, episode_last_step, int(round((episode_last_step-episode_first_step)/(num-3)))):
+                indexes_3.append(index)
+                # print(int((episode_last_step-episode_first_step)/(num-1)))
+            indexes_3.append(episode_last_step)
+            # print(np.array(indexes_3).shape)
+            if np.array(indexes_1).shape[0] == 10:
+                indexes = indexes_1
+            elif np.array(indexes_2).shape[0] == 10:
+                indexes = indexes_2
+            elif np.array(indexes_3).shape[0] == 10:
+                indexes = indexes_3
+            elif np.array(indexes_3).shape[0] == 9:
+                indexes = indexes_3
+                indexes.append(episode_last_step)
+            elif np.array(indexes_3).shape[0] == 8:
+                indexes = indexes_3
+                indexes.append(episode_last_step)
+                indexes.append(episode_last_step)
+            elif np.array(indexes_3).shape[0] > 10:
+                indexes = indexes_3[1:]
+            else:
+                print("error")
+            # print(np.array(indexes).shape)
+            # print(indexes)
+            episode_indexes.append(indexes)
+    print("tlqkf", np.array(episode_indexes).shape)
+    # figure_cartesian_episode(1004, raw_data, episode_indexes)
+
+    clustering_data = []
+    visualization_data = []
+    vfeatures = ["AEX", "AEY", "AEZ", "AAX", "AAY", "AAZ", "ABX", "ABY", "ABZ"]
+    for episode_index in episode_indexes:
+        # episode_data = []
+        cdata = []
+        vdata = []
+        for index in episode_index:
+            # data = []
+            for feature in features:
+                cdata.append(raw_data[feature][index])
+            # print("!@#$", np.array(data).shape)
+            # episode_data.append(data)
+            for vfeature in vfeatures:
+                vdata.append(raw_data[vfeature][index])
+        # print("!@#$", np.array(episode_data).shape)
+        # clustering_data.append(episode_data)
+        clustering_data.append(cdata)
+        visualization_data.append(vdata)
+    # for idx in range(304):
+        # print("!@#$", np.array(clustering_data[idx]).shape)
+    
+    print("!@#$", np.array(clustering_data).shape)
+
+    CLUSTER = 5
+
+    model = KMeans(n_clusters=CLUSTER, random_state=10).fit(clustering_data)
+    dic1 = {name:value for name, value in zip(model.labels_, visualization_data)}
+    figure_clustering_algorithm(6, dic1)
+
+    model777 = KMeans(n_clusters=CLUSTER, random_state=10).fit(visualization_data)
+    # value1 = model.cluster_centers_
+    # dic1 = {name:value for name, value in zip(model.labels_, visualization_data)}
+    dic777 = {name:value for name, value in zip([i for i in range(CLUSTER)], model777.cluster_centers_.tolist())}
+    # print("tlqjltjlwjtlkjwjtlkwjtlkwjtlkjwtlkwjtl", dic1)
+    figure_clustering_algorithm(6777, dic777)
+    elbow(777, clustering_data)
+
+    clustering_relative = AffinityPropagation(random_state=5).fit(clustering_data)
+    dic2 = {name:value for name, value in zip(clustering_relative.labels_, visualization_data)} # do not touch!
+    # figure_clustering_algorithm(7, dic2)
+
+    MS_clustering_relative = MeanShift(bandwidth=0.2).fit(clustering_data)
+    dic3 = {name:value for name, value in zip(MS_clustering_relative.labels_, visualization_data)} # do not touch!
+    figure_clustering_algorithm(8, dic3)
+
+    clustering_relative = SpectralClustering(n_clusters=CLUSTER, assign_labels='discretize', random_state=10).fit(clustering_data)
+    dic4 = {name:value for name, value in zip(clustering_relative.labels_, visualization_data)} # do not touch!
+    figure_clustering_algorithm(9, dic4)
+
+    clustering_relative = AgglomerativeClustering(n_clusters=CLUSTER).fit(clustering_data)
+    dic5 = {name:value for name, value in zip(clustering_relative.labels_, visualization_data)} # do not touch!
+    figure_clustering_algorithm(10, dic5)
+
+    DBSCAN_clustering_relative = DBSCAN(eps=0.5, min_samples=CLUSTER).fit(clustering_data)
+    dic6 = {name:value for name, value in zip(DBSCAN_clustering_relative.labels_, visualization_data)} # do not touch!
+    # figure_clustering_algorithm(11, dic6)
+
+    clustering_relative = OPTICS(min_samples=CLUSTER).fit(clustering_data)
+    dic7 = {name:value for name, value in zip(clustering_relative.labels_, visualization_data)} # do not touch!
+    # figure_clustering_algorithm(12, dic7)
+
+    GMM_clustering_relative = GaussianMixture(n_components=CLUSTER, random_state=10).fit(clustering_data)
+    labels = GMM_clustering_relative.fit_predict(clustering_data)
+    dic8 = {name:value for name, value in zip(labels, visualization_data)} # do not touch!
+    figure_clustering_algorithm(13, dic8)
+
+    clustering_relative = Birch(n_clusters=CLUSTER).fit(clustering_data)
+    dic9 = {name:value for name, value in zip(clustering_relative.labels_, visualization_data)} # do not touch!
+    figure_clustering_algorithm(14, dic9)
+    
+    # # random plot
+    # for j in range(10):
+    #     figure_cartesian_random(1000+j, visualization_data)
+    # # for j in range(10):
+    # #     figure_cartesian_random(2000+j, fail_visualization_data)
+    
+    # figure_cartesian_3d(100, visualization_data)
+    # # figure_cartesian_2d(101, clustering_data)
+
+    # # figure_cartesian_3d(102, fail_visualization_data)
+    # # figure_cartesian_2d(103, fail_clustering_data)
+
+    # # level_2_clustering(raw_data, episodic_data)
 
 def tlqkf(rd, finish_c, features, conditions, conditions_rel):
     # conditions = []
@@ -318,241 +279,91 @@ def tlqkf(rd, finish_c, features, conditions, conditions_rel):
     return conditions, conditions_rel
 
 def main():
-    # raw_data = get_data("episode_data_11_08_24.csv")
-    
-    # figure_timeseries(1, raw_data, 1000)
-    # starts = [10000]
-    # ends = [11000]
-    # figure_timeseries_1000(333, raw_data, starts, ends)
-    # episodic_data = detect_rc(raw_data)
-    # pass_episodes, fail_episodes = pass_fail_data(raw_data)
-    # # figure_timeseries_episodic_start_end(2, episodic_data, 250, 255)
-    # # figure_cartesian(3, episodic_data)
+    raw_data = get_data("episode_data_01_53_02.csv")
+    # EDA(raw_data)
+    # figure_timeseries(1, raw_data, raw_data.shape[0])
+
+    raw_data = level_1_clustering(raw_data)
+    print(raw_data.loc[raw_data["level_1_cluster"] == 1].shape)
+    print(raw_data.loc[raw_data["level_1_cluster"] == 0].shape)
+    print(raw_data.loc[raw_data["level_1_cluster"] == -1].shape)
+    # EDA(raw_data)
+    # figure_timeseries(2, raw_data, raw_data.shape[0])
+
+    raw_data = level_2_clustering(raw_data)
+    # EDA(raw_data)
+    print(raw_data.loc[raw_data["level_2_cluster"] == 1].shape)
+    print(raw_data.loc[raw_data["level_2_cluster"] == 0].shape)
+    print(raw_data.loc[raw_data["level_2_cluster"] == -1].shape)
+
+    # figure_timeseries_episodic_start_end(2, episodic_data, 250, 255)
+    # figure_cartesian(3, episodic_data)
     # figure_cartesian_start_end(4, episodic_data, 250, 255)
-    # features = ["REAX", "REAY", "REAZ", "REBX", "REBY", "REBZ", "READ", "REBD"]
-    # # features = ["REAX", "REAY", "REAZ", "REBX", "REBY", "REBZ"]
-    # # features = ["REAX", "REAY", "REBX", "REBY"]
-    # # features = ["AEX", "AEY", "AEZ", "AAX", "AAY", "AAZ", "ABX", "ABY", "ABZ", "REAX", "REAY", "REAZ", "REBX", "REBY", "REBZ"]
-    # # features = ["AEX", "AEY", "AEZ", "AAX", "AAY", "AAZ", "ABX", "ABY", "ABZ"]
-    # # features = ["AEX", "AEY", "AAX", "AAY", "ABX", "ABY", "REAX", "REAY", "REBX", "REBY"]
-    # # features = ["REAX", "REAY", "REBX", "REBY", "READ", "REBD"]
-    # pass_conditions_abs, pass_conditions_rel, conditions_abs, conditions_rel = clustering_data(episodic_data, features, pass_episodes, fail_episodes)
 
-    # CLUSTER = 4
+    features = ["REAX", "REAY", "REAZ", "REBX", "REBY", "REBZ", "READ", "REBD"]
+    # features = ["REAX", "REAY", "REAZ", "REBX", "REBY", "REBZ"]
+    # features = ["REAX", "REAY", "REBX", "REBY"]
+    # features = ["AEX", "AEY", "AEZ", "AAX", "AAY", "AAZ", "ABX", "ABY", "ABZ", "REAX", "REAY", "REAZ", "REBX", "REBY", "REBZ"]
+    # features = ["AEX", "AEY", "AEZ", "AAX", "AAY", "AAZ", "ABX", "ABY", "ABZ"]
+    # features = ["AEX", "AEY", "AAX", "AAY", "ABX", "ABY", "REAX", "REAY", "REBX", "REBY"]
+    # features = ["REAX", "REAY", "REBX", "REBY", "READ", "REBD"]
+    level_3_clustering(raw_data, features)
 
-    # model = KMeans(n_clusters=CLUSTER, random_state=10).fit(conditions_rel)
-    # dic1 = {name:value for name, value in zip(model.labels_, conditions_abs)}
-    # figure_clustering_algorithm(6, dic1)
-
-    # model777 = KMeans(n_clusters=CLUSTER, random_state=10).fit(conditions_abs)
-    # # value1 = model.cluster_centers_
-    # # dic1 = {name:value for name, value in zip(model.labels_, conditions_abs)}
-    # dic777 = {name:value for name, value in zip([i for i in range(CLUSTER)], model777.cluster_centers_.tolist())}
-    # print("tlqjltjlwjtlkjwjtlkwjtlkwjtlkjwtlkwjtl", dic1)
-    # figure_clustering_algorithm(6777, dic777)
-    # elbow(777, conditions_abs)
-
-    # clustering_relative = AffinityPropagation(random_state=5).fit(conditions_rel)
-    # dic2 = {name:value for name, value in zip(clustering_relative.labels_, conditions_abs)} # do not touch!
-    # # figure_clustering_algorithm(7, dic2)
-
-    # MS_clustering_relative = MeanShift(bandwidth=0.2).fit(conditions_rel)
-    # dic3 = {name:value for name, value in zip(MS_clustering_relative.labels_, conditions_abs)} # do not touch!
-    # figure_clustering_algorithm(8, dic3)
-
-    # clustering_relative = SpectralClustering(n_clusters=CLUSTER, assign_labels='discretize', random_state=10).fit(conditions_rel)
-    # dic4 = {name:value for name, value in zip(clustering_relative.labels_, conditions_abs)} # do not touch!
-    # figure_clustering_algorithm(9, dic4)
-
-    # clustering_relative = AgglomerativeClustering(n_clusters=CLUSTER).fit(conditions_rel)
-    # dic5 = {name:value for name, value in zip(clustering_relative.labels_, conditions_abs)} # do not touch!
-    # figure_clustering_algorithm(10, dic5)
-
-    # DBSCAN_clustering_relative = DBSCAN(eps=0.5, min_samples=CLUSTER).fit(conditions_rel)
-    # dic6 = {name:value for name, value in zip(DBSCAN_clustering_relative.labels_, conditions_abs)} # do not touch!
-    # # figure_clustering_algorithm(11, dic6)
-
-    # clustering_relative = OPTICS(min_samples=CLUSTER).fit(conditions_rel)
-    # dic7 = {name:value for name, value in zip(clustering_relative.labels_, conditions_abs)} # do not touch!
-    # # figure_clustering_algorithm(12, dic7)
-
-    # GMM_clustering_relative = GaussianMixture(n_components=CLUSTER, random_state=10).fit(conditions_rel)
-    # labels = GMM_clustering_relative.fit_predict(conditions_rel)
-    # dic8 = {name:value for name, value in zip(labels, conditions_abs)} # do not touch!
-    # figure_clustering_algorithm(13, dic8)
-
-    # clustering_relative = Birch(n_clusters=CLUSTER).fit(conditions_rel)
-    # dic9 = {name:value for name, value in zip(clustering_relative.labels_, conditions_abs)} # do not touch!
-    # figure_clustering_algorithm(14, dic9)
     
-    # # random plot
-    # for j in range(10):
-    #     figure_cartesian_random(1000+j, conditions_abs)
-    # # for j in range(10):
-    # #     figure_cartesian_random(2000+j, fail_conditions_abs)
-    
-    # figure_cartesian_3d(100, conditions_abs)
-    # # figure_cartesian_2d(101, conditions_rel)
-
-    # # figure_cartesian_3d(102, fail_conditions_abs)
-    # # figure_cartesian_2d(103, fail_conditions_rel)
-
-    # # pass_fail_data(raw_data, episodic_data)
 
     CLUSTER = 3
 
-    condition1 = create_data_()
-    # print(condition1)
-    figure_cartesian_single(888, condition1)
+    # condition1 = create_data_()
+    # # print(condition1)
+    # figure_cartesian_single(888, condition1)
 
-    model = KMeans(n_clusters=CLUSTER, random_state=20).fit(condition1)
-    dic111 = {name:value for name, value in zip([i for i in range(CLUSTER)], model.cluster_centers_.tolist())}
-    # dic112 = {name:value for name, value in zip([i for i in range(CLUSTER)], condition1)}
-    figure_clustering_algorithm(665, dic111)
-    # figure_clustering_algorithm(666, dic112)
-    elbow(667, condition1)
+    # model = KMeans(n_clusters=CLUSTER, random_state=20).fit(condition1)
+    # dic111 = {name:value for name, value in zip([i for i in range(CLUSTER)], model.cluster_centers_.tolist())}
+    # # dic112 = {name:value for name, value in zip([i for i in range(CLUSTER)], condition1)}
+    # figure_clustering_algorithm(665, dic111)
+    # # figure_clustering_algorithm(666, dic112)
+    # elbow(667, condition1)
 
-    # clustering_relative = AffinityPropagation(random_state=5).fit(condition1)
-    # # dic2 = {name:value for name, value in zip(clustering_relative.labels_, condition1)} # do not touch!
-    # dic2 = {name:value for name, value in zip([i for i in range(CLUSTER)], clustering_relative.cluster_centers_.tolist())}
-    # figure_clustering_algorithm(7, dic2)
+    # # clustering_relative = AffinityPropagation(random_state=5).fit(condition1)
+    # # # dic2 = {name:value for name, value in zip(clustering_relative.labels_, condition1)} # do not touch!
+    # # dic2 = {name:value for name, value in zip([i for i in range(CLUSTER)], clustering_relative.cluster_centers_.tolist())}
+    # # figure_clustering_algorithm(7, dic2)
 
-    MS_clustering_relative = MeanShift(bandwidth=0.2).fit(condition1)
-    # dic3 = {name:value for name, value in zip(MS_clustering_relative.labels_, condition1)} # do not touch!
-    dic3 = {name:value for name, value in zip([i for i in range(CLUSTER)], MS_clustering_relative.cluster_centers_.tolist())}
-    figure_clustering_algorithm(8, dic3)
+    # MS_clustering_relative = MeanShift(bandwidth=0.2).fit(condition1)
+    # # dic3 = {name:value for name, value in zip(MS_clustering_relative.labels_, condition1)} # do not touch!
+    # dic3 = {name:value for name, value in zip([i for i in range(CLUSTER)], MS_clustering_relative.cluster_centers_.tolist())}
+    # figure_clustering_algorithm(8, dic3)
 
-    # clustering_relative = SpectralClustering(n_clusters=CLUSTER, assign_labels='discretize', random_state=10).fit(condition1)
-    # # dic4 = {name:value for name, value in zip(clustering_relative.labels_, condition1)} # do not touch!
-    # dic4 = {name:value for name, value in zip([i for i in range(CLUSTER)], clustering_relative.affinity_matrix_.tolist())}
-    # figure_clustering_algorithm(9, dic4)
+    # # clustering_relative = SpectralClustering(n_clusters=CLUSTER, assign_labels='discretize', random_state=10).fit(condition1)
+    # # # dic4 = {name:value for name, value in zip(clustering_relative.labels_, condition1)} # do not touch!
+    # # dic4 = {name:value for name, value in zip([i for i in range(CLUSTER)], clustering_relative.affinity_matrix_.tolist())}
+    # # figure_clustering_algorithm(9, dic4)
 
-    clustering_relative = AgglomerativeClustering(n_clusters=CLUSTER).fit(condition1)
-    dic5 = {name:value for name, value in zip(clustering_relative.labels_, condition1)} # do not touch!
-    # dic5 = {name:value for name, value in zip([i for i in range(CLUSTER)], clustering_relative.distances_.tolist())}
-    figure_clustering_algorithm(10, dic5)
+    # clustering_relative = AgglomerativeClustering(n_clusters=CLUSTER).fit(condition1)
+    # dic5 = {name:value for name, value in zip(clustering_relative.labels_, condition1)} # do not touch!
+    # # dic5 = {name:value for name, value in zip([i for i in range(CLUSTER)], clustering_relative.distances_.tolist())}
+    # figure_clustering_algorithm(10, dic5)
 
-    # DBSCAN_clustering_relative = DBSCAN(eps=0.5, min_samples=CLUSTER).fit(condition1)
-    # # dic6 = {name:value for name, value in zip(DBSCAN_clustering_relative.labels_, condition1)} # do not touch!
-    # dic6 = {name:value for name, value in zip([i for i in range(CLUSTER)], DBSCAN_clustering_relative.components_.tolist())}
-    # figure_clustering_algorithm(11, dic6)
+    # # DBSCAN_clustering_relative = DBSCAN(eps=0.5, min_samples=CLUSTER).fit(condition1)
+    # # # dic6 = {name:value for name, value in zip(DBSCAN_clustering_relative.labels_, condition1)} # do not touch!
+    # # dic6 = {name:value for name, value in zip([i for i in range(CLUSTER)], DBSCAN_clustering_relative.components_.tolist())}
+    # # figure_clustering_algorithm(11, dic6)
 
-    # clustering_relative = OPTICS(min_samples=CLUSTER).fit(condition1)
-    # # dic7 = {name:value for name, value in zip(clustering_relative.labels_, condition1)} # do not touch!
-    # dic7 = {name:value for name, value in zip([i for i in range(CLUSTER)], clustering_relative.core_distances_.tolist())}
-    # # figure_clustering_algorithm(12, dic7)
+    # # clustering_relative = OPTICS(min_samples=CLUSTER).fit(condition1)
+    # # # dic7 = {name:value for name, value in zip(clustering_relative.labels_, condition1)} # do not touch!
+    # # dic7 = {name:value for name, value in zip([i for i in range(CLUSTER)], clustering_relative.core_distances_.tolist())}
+    # # # figure_clustering_algorithm(12, dic7)
 
-    GMM_clustering_relative = GaussianMixture(n_components=CLUSTER, random_state=10).fit(condition1)
-    labels = GMM_clustering_relative.fit_predict(condition1)
-    dic8 = {name:value for name, value in zip(labels, condition1)} # do not touch!
-    # dic8 = {name:value for name, value in zip([i for i in range(CLUSTER)], GMM_clustering_relative.means_.tolist())}
-    figure_clustering_algorithm(13, dic8)
+    # GMM_clustering_relative = GaussianMixture(n_components=CLUSTER, random_state=10).fit(condition1)
+    # labels = GMM_clustering_relative.fit_predict(condition1)
+    # dic8 = {name:value for name, value in zip(labels, condition1)} # do not touch!
+    # # dic8 = {name:value for name, value in zip([i for i in range(CLUSTER)], GMM_clustering_relative.means_.tolist())}
+    # figure_clustering_algorithm(13, dic8)
 
-    clustering_relative = Birch(n_clusters=CLUSTER).fit(condition1)
-    # dic9 = {name:value for name, value in zip(clustering_relative.labels_, condition1)} # do not touch!
-    dic9 = {name:value for name, value in zip([i for i in range(CLUSTER)], clustering_relative.subcluster_centers_.tolist())}
-    figure_clustering_algorithm(14, dic9)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    # # This is the size of our encoded representations
-    # encoding_dim = 32  # 32 floats -> compression of factor 24.5, assuming the input is 784 floats
-
-    # # This is our input image
-    # input_img = keras.Input(shape=(135,))
-    # # "encoded" is the encoded representation of the input
-    # encoded = layers.Dense(encoding_dim, activation='relu')(input_img)
-    # # "decoded" is the lossy reconstruction of the input
-    # decoded = layers.Dense(135, activation='sigmoid')(encoded)
-
-    # # This model maps an input to its reconstruction
-    # autoencoder = keras.Model(input_img, decoded)
-
-    # # This model maps an input to its encoded representation
-    # encoder = keras.Model(input_img, encoded)
-
-    # # This is our encoded (32-dimensional) input
-    # encoded_input = keras.Input(shape=(encoding_dim,))
-    # # Retrieve the last layer of the autoencoder model
-    # decoder_layer = autoencoder.layers[-1]
-    # # Create the decoder model
-    # decoder = keras.Model(encoded_input, decoder_layer(encoded_input))
-
-    # autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
-
-    # # from keras.datasets import mnist
-    # # import numpy as np
-    # # (x_train, _), (x_test, _) = mnist.load_data()
-
-    # # x_train = x_train.astype('float32') / 255.
-    # # x_test = x_test.astype('float32') / 255.
-    # # x_train = x_train.reshape((len(x_train), np.prod(x_train.shape[1:])))
-    # # x_test = x_test.reshape((len(x_test), np.prod(x_test.shape[1:])))
-    # # print(x_train.shape)
-    # # print(x_test.shape)
-
-    # # autoencoder.fit(x_train, x_train,
-    # #                 epochs=50,
-    # #                 batch_size=256,
-    # #                 shuffle=True,
-    # #                 validation_data=(x_test, x_test))
-    # autoencoder.fit(condition1, condition1,
-    #                 epochs=500,
-    #                 batch_size=5,
-    #                 shuffle=True)
-
-    # # Encode and decode some digits
-    # # Note that we take them from the *test* set
-    # encoded_imgs = encoder.predict(condition1)
-    # decoded_imgs = decoder.predict(encoded_imgs)
-
-    # # Use Matplotlib (don't ask)
-    # import matplotlib.pyplot as plt
-
-    # n = 10  # How many digits we will display
-    # plt.figure(figsize=(20, 4))
-    # for i in range(n):
-    #     # Display original
-    #     ax = plt.subplot(2, n, i + 1)
-    #     plt.imshow(condition1[i].reshape(15, 9))
-    #     plt.gray()
-    #     ax.get_xaxis().set_visible(False)
-    #     ax.get_yaxis().set_visible(False)
-
-    #     # Display reconstruction
-    #     ax = plt.subplot(2, n, i + 1 + n)
-    #     plt.imshow(decoded_imgs[i].reshape(15, 9))
-    #     plt.gray()
-    #     ax.get_xaxis().set_visible(False)
-    #     ax.get_yaxis().set_visible(False)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    # clustering_relative = Birch(n_clusters=CLUSTER).fit(condition1)
+    # # dic9 = {name:value for name, value in zip(clustering_relative.labels_, condition1)} # do not touch!
+    # dic9 = {name:value for name, value in zip([i for i in range(CLUSTER)], clustering_relative.subcluster_centers_.tolist())}
+    # figure_clustering_algorithm(14, dic9)
 
     plt.show()
 
