@@ -18,8 +18,8 @@ from sklearn.cluster import OPTICS
 from sklearn.mixture import GaussianMixture
 from sklearn.cluster import Birch
 
-import keras
-from keras import layers
+# import keras
+# from keras import layers
 
 import os
 
@@ -168,7 +168,7 @@ def level_3_clustering(raw_data, features, cluster):
             # print(indexes)
             episode_indexes.append(indexes)
     print("tlqkf", np.array(episode_indexes).shape)
-    # figure_cartesian_episode(1004, raw_data, episode_indexes)
+    figure_cartesian_episode(1004, raw_data, episode_indexes)
 
     clustering_data = []
     visualization_data = []
@@ -201,48 +201,48 @@ def level_3_clustering(raw_data, features, cluster):
 
     model = KMeans(n_clusters=CLUSTER, random_state=10).fit(clustering_data)
     dic1 = {name:value for name, value in zip(model.labels_, visualization_data)}
-    figure_clustering_algorithm(6, dic1)
+    figure_clustering_algorithm("K-Means", dic1)
 
     model777 = KMeans(n_clusters=CLUSTER, random_state=10).fit(visualization_data)
     # value1 = model.cluster_centers_
     # dic1 = {name:value for name, value in zip(model.labels_, visualization_data)}
     dic777 = {name:value for name, value in zip([i for i in range(CLUSTER)], model777.cluster_centers_.tolist())}
     # print("tlqjltjlwjtlkjwjtlkwjtlkwjtlkjwtlkwjtl", dic1)
-    figure_clustering_algorithm(6777, dic777)
-    elbow(777, clustering_data)
+    figure_clustering_algorithm("K-Means_", dic777)
+    elbow("K-Means_Elbow", clustering_data)
 
     clustering_relative = AffinityPropagation(random_state=5).fit(clustering_data)
     dic2 = {name:value for name, value in zip(clustering_relative.labels_, visualization_data)} # do not touch!
-    # figure_clustering_algorithm(7, dic2)
+    # figure_clustering_algorithm("AffinityPropagation", dic2)
 
     # MS_clustering_relative = MeanShift(bandwidth=0.2).fit(clustering_data)
     # dic3 = {name:value for name, value in zip(MS_clustering_relative.labels_, visualization_data)} # do not touch!
-    # figure_clustering_algorithm(8, dic3)
+    # figure_clustering_algorithm("MeanShift", dic3)
 
     clustering_relative = SpectralClustering(n_clusters=CLUSTER, assign_labels='discretize', random_state=10).fit(clustering_data)
     dic4 = {name:value for name, value in zip(clustering_relative.labels_, visualization_data)} # do not touch!
-    figure_clustering_algorithm(9, dic4)
+    figure_clustering_algorithm("SpectralClustering", dic4)
 
     clustering_relative = AgglomerativeClustering(n_clusters=CLUSTER).fit(clustering_data)
     dic5 = {name:value for name, value in zip(clustering_relative.labels_, visualization_data)} # do not touch!
-    figure_clustering_algorithm(10, dic5)
+    figure_clustering_algorithm("AgglomerativeClustering", dic5)
 
     DBSCAN_clustering_relative = DBSCAN(eps=0.5, min_samples=CLUSTER).fit(clustering_data)
     dic6 = {name:value for name, value in zip(DBSCAN_clustering_relative.labels_, visualization_data)} # do not touch!
-    # figure_clustering_algorithm(11, dic6)
+    # figure_clustering_algorithm("DBSCAN", dic6)
 
-    clustering_relative = OPTICS(min_samples=CLUSTER).fit(clustering_data)
-    dic7 = {name:value for name, value in zip(clustering_relative.labels_, visualization_data)} # do not touch!
-    # figure_clustering_algorithm(12, dic7)
+    # clustering_relative = OPTICS(min_samples=CLUSTER).fit(clustering_data)
+    # dic7 = {name:value for name, value in zip(clustering_relative.labels_, visualization_data)} # do not touch!
+    # # figure_clustering_algorithm("OPTICS", dic7)
 
     GMM_clustering_relative = GaussianMixture(n_components=CLUSTER, random_state=10).fit(clustering_data)
     labels = GMM_clustering_relative.fit_predict(clustering_data)
     dic8 = {name:value for name, value in zip(labels, visualization_data)} # do not touch!
-    figure_clustering_algorithm(13, dic8)
+    figure_clustering_algorithm("GaussianMixture", dic8)
 
     clustering_relative = Birch(n_clusters=CLUSTER).fit(clustering_data)
     dic9 = {name:value for name, value in zip(clustering_relative.labels_, visualization_data)} # do not touch!
-    figure_clustering_algorithm(14, dic9)
+    figure_clustering_algorithm("Birch", dic9)
     
 def main():
     # files = ["episode_data_01_53_02.csv", "episode_data_23_47_42.csv"]
@@ -277,9 +277,9 @@ def main():
     # features = ["AEX", "AEY", "AAX", "AAY", "ABX", "ABY", "REAX", "REAY", "REBX", "REBY"]
     # features = ["REAX", "REAY", "REBX", "REBY", "READ", "REBD"]
 
-    level_3_clustering(raw_data, features, 10)
+    level_3_clustering(raw_data, features, 5)
 
-    plt.show()
+    # plt.show()
 
 if __name__ == "__main__":
     main()
