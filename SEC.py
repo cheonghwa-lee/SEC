@@ -279,7 +279,7 @@ def main():
 
     level_3_clustering(raw_data, features, 5)
 
-    # plt.show()
+    plt.show()
 
 if __name__ == "__main__":
     main()
